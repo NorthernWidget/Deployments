@@ -16,7 +16,7 @@
 #include <avr/power.h>
 
 //////////////////////////////////USER DEFINE//////////////////////////////////
-const unsigned int LogInterval = 600; //Number of seconds between each logging event
+const unsigned int LogInterval = 5; //Number of seconds between each logging event
 #define BARO //Uncomment this line if barometer is connected to logger
 
 // int Log_Interval_Seconds = 5; //Valid range is 0-59 seconds
@@ -140,8 +140,9 @@ void setup () {
 void loop() {
 
 	if(NewLog) {
+		Serial.println("Log Started!"); //DEBUG
 		LogEvent = true;
-		RTC.SetAlarm(LogInterval);
+		RTC.SetAlarm(LogInterval); //DEBUG!
 		// SetAlarm(Log_Interval_Hours, Log_Interval_Minutes, Log_Interval_Seconds); //Setup alarm when log button is pressed
 		InitLogFile(); //Start a new file each time log button is pressed
 		// Log(); //Log a value at that instant as well as set up future logs
@@ -154,11 +155,12 @@ void loop() {
 		LogStr(Data);
 		// Serial.println("LoggingDone"); //DEBUG!
 		LogEvent = false; //Clear log flag
+		// RTC.SetAlarm(LogInterval);
 	}
 
 //  Serial.println("AlarmTest"); //DEBUG!
 	if(!digitalRead(RTCInt)) {
-//    Serial.println("Reset Alarm"); //DEBUG!
+   Serial.println("Reset Alarm"); //DEBUG!
 //    RTC.ClearAlarm(); //
 		RTC.SetAlarm(LogInterval); //Turn alarm back on 
 	}
@@ -299,7 +301,7 @@ void InitLogFile(){
     #endif
 }
 
-void ClockTest() {
+void ClockTest() { 
 	int Error = 1;
 
 	// digitalWrite(Ext3v3Ctrl, HIGH); //Turn off power to outputs
