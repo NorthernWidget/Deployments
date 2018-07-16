@@ -43,7 +43,7 @@ BME RH;
 TLog Logger;
 
 void setup() {
-	Header = Header + PyroUp.GetHeader() + PyroDown.GetHeader() + Pyrg.GetHeader() + Ultrasonic.GetHeader() + RH.GetHeader();
+	// Header = Header + PyroUp.GetHeader() + PyroDown.GetHeader() + Pyrg.GetHeader() + Ultrasonic.GetHeader() + RH.GetHeader();
 	Logger.begin(I2CVals, sizeof(I2CVals), Header); //Pass header info to logger
 	Init();
 }
@@ -57,11 +57,11 @@ String Update()
 	float Val1 = Logger.GetVoltage(SoilMoistPin1);
 	float Val2 = Logger.GetVoltage(SoilMoistPin2);
 	float Val3 = Logger.GetVoltage(GroundTempPin);
-	float Val4 = GetTicks()/UpdateRate;
+	float Val4 = GetTicks()/UpdateRate;  //DEBUG!
 	float Val5 = Logger.GetVoltage(WindVanePin);
 	unsigned int Val6 = Count*0.01; //Convert to inches of rain
 	Count = 0; //Clear counter with each read 
-	ClearTicks(); //Clear anemometer counter with each read
+	ClearTicks(); //Clear anemometer counter with each read //DEBUG!
 	return String(Val1) + "," + String(Val2) + "," + String(Val3) + "," + String(Val4) + "," + String(Val5) + "," + String(Val6) + "," + PyroUp.GetString() + PyroDown.GetString() + Pyrg.GetString() + Ultrasonic.GetString() + RH.GetString();
 }
 
