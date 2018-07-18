@@ -5,9 +5,9 @@
 #include <Maxbotics.h>
 #include <BME.h>
 
-String Header = "Soil Moisture A [mV], Soil Moisture B [mV], Ground Temp [C], Wind Vane Pos [deg], Wind Speed [Rot/s], Rain Fall [in]"; //Information header
+static String Header = "GS1A[mV], GS1B [mV], TempG [C], WindPos [deg], Wind [Rot/s], Rain [in]"; //Information header
 
-uint8_t I2CVals[2] = {0x6A, 0x77};  //FIX?? 
+uint8_t I2CVals[6] = {0x77, 0x41, 0x40, 0x53, 0x1D, 0x49};  //BME 280, Pyro down, pyro up, accel down, accel up, pyrg down  
 
 unsigned long UpdateRate = 5; //Number of seconds between readings 
 
@@ -25,8 +25,8 @@ uint8_t RainGaugeInt = 11; //Digital pin 11, AKA TX_EXT
 
 volatile unsigned int Count = 0; //Global counter for tipping bucket 
 //Pyro short wave 
-DysonSW PyroUp;
-DysonSW PyroDown;
+DysonSW PyroUp(UP);
+DysonSW PyroDown(DOWN);
 
 //Pyro long wave 
 DysonLW Pyrg;
@@ -59,16 +59,16 @@ String Update()
 	float Val3 = Logger.GetVoltage(GroundTempPin);
 	float Val4 = GetTicks()/UpdateRate;  //DEBUG!
 	float Val5 = Logger.GetVoltage(WindVanePin);
-	unsigned int Val6 = Count*0.01; //Convert to inches of rain
+	float Val6 = Count*0.01; //Convert to inches of rain
 	Count = 0; //Clear counter with each read 
 	ClearTicks(); //Clear anemometer counter with each read //DEBUG!
-	return String(Val1) + "," + String(Val2) + "," + String(Val3) + "," + String(Val4) + "," + String(Val5) + "," + String(Val6) + "," + PyroUp.GetString() + PyroDown.GetString() + Pyrg.GetString() + Ultrasonic.GetString() + RH.GetString();
+	return String(Val1) + "," + String(Val2) + "," + String(Val3) + "," + String(Val4) + "," + String(Val5) + "," + String(Val6) + PyroUp.GetString() + PyroDown.GetString() + Pyrg.GetString() + Ultrasonic.GetString() + RH.GetString();
 }
 
 void Init() 
 {
-	PyroUp.begin(UP);
-	PyroDown.begin(DOWN);
+	PyroUp.begin();
+	PyroDown.begin();
 	Pyrg.begin();
 	// Counter.begin();
 	Ultrasonic.begin();
