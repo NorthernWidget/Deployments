@@ -7,7 +7,7 @@ BME RH;
 String Header = "Rain [in]"; //Information header
 uint8_t I2CVals[1] = {0x77}; 
 // int Count = 0;
-unsigned long UpdateRate = 5; //Number of seconds between readings 
+unsigned long UpdateRate = 30; //Number of seconds between readings 
 
 Margay Logger(Model_1v0);
 
