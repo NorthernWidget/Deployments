@@ -4,7 +4,7 @@
 
 BME RH;
 
-String Header = "Rain [in]"; //Information header
+String Header = "Rain [in], "; //Information header
 uint8_t I2CVals[1] = {0x77}; 
 // int Count = 0;
 unsigned long UpdateRate = 60; //Number of seconds between readings 
@@ -29,7 +29,7 @@ String Update()
 {
 	float Val1 = Count*0.01;  //Account for volume per tip
 	Count = 0; //Clear count with each update 
-	return String(Val1) + RH.GetString();
+	return String(Val1) + "," + RH.GetString();
 }
 
 void Init() 
