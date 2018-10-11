@@ -32,6 +32,6 @@ String Update()
 
 void Init() 
 {
-	DH.begin(TP2A2);
-	RH.begin(0x77);
+	DH.begin(TP2v2);
+	RH.begin(0x76);
 }
