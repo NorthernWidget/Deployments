@@ -24,6 +24,7 @@ void loop() {
 String Update() 
 {
 	Init();
+  delay(250);
 	return DH.GetString();
 }
 

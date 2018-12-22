@@ -26,6 +26,7 @@ void loop() {
 String Update() 
 {
 	Init();
+  delay(1000); //FIX in library
 	return DH.GetString() + RH.GetString();
 }
 

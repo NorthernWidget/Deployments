@@ -27,6 +27,7 @@ String Update()
   Count = 0; //Clear count with each update 
   float Volt = Logger.GetVoltage(); 
   float Val2 = TempConvert(Volt, 1.8, 10000, 3977, 10000); //For use with thermistor NTCLE400E3103H
+  Val2 = Val2 - 273.15; //Convert to C from K
   return String(Val1) + "," + String(Val2);
 }
 
