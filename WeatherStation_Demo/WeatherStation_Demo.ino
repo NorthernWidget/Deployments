@@ -2,7 +2,7 @@
 #include "TLog.h"
 #include <DysonSW.h>
 #include <DysonLW.h>
-#include <Maxbotics.h>
+#include <Maxbotix.h>
 #include <BME.h>
 
 static String Header = "GS1A[mV], GS1B [mV], TempG [C], WindPos [deg], Wind [Rot/s], Rain [in]"; //Information header
@@ -34,8 +34,8 @@ DysonLW Pyrg;
 //Counter for anamometer
 // Tally Counter;
 
-//Maxbotics rangefinder
-Maxbotics Ultrasonic;
+//Maxbotix rangefinder
+Maxbotix Ultrasonic;
 
 //BMP temp, pressure, relative humidty
 BME RH;
