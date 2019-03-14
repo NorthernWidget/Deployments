@@ -17,7 +17,7 @@ uint8_t I2CVals[1] = {0x77};
 
 unsigned long UpdateRate = 60; //Number of seconds between readings 
 
-Margay Logger(Model_1v0, Build_B);  //Use build_b with correct ADC for board
+Margay Logger(Model_1v0, Build_A);  //Use build_b with correct ADC for board
 
 void setup() {
   Header = Header + RH.GetHeader();  //Manually add soil temp to header, along with BME280 header
