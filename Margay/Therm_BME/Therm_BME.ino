@@ -38,8 +38,8 @@ void Init()
 
 float TempConvert(float V, float Vcc, float R, float Beta, float R25)
 {
-  // float Rt = (Vcc/V)*R - R;  //Use if thermistor is on TOP side of voltage divider
-  float Rt = -R/(1 - (Vcc/V)); //Use if thermistor is on BOTTOM side of voltage divider  
+   float Rt = (Vcc/V)*R - R;  //Use if thermistor is on TOP side of voltage divider
+//  float Rt = -R/(1 - (Vcc/V)); //Use if thermistor is on BOTTOM side of voltage divider  
   float T = 1.0/((1.0/Beta)*log(Rt/R25) + 1/298.15);
   return T;
 }
