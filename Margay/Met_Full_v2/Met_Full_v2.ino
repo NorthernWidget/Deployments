@@ -6,26 +6,27 @@
 #include <T9602.h>
 #include <Tally_I2C.h>
 
+Margay Logger(Model_2v0, Build_C);  //Use build_b with correct ADC for board
+
 DysonSW PyroUp(UP); // Initialzie upward-facing Dyson shortwave
 DysonSW PyroDown(DOWN); // Initialize downward-facing Dyson shortwave
 DysonLW Pyrg; // Initialize (downward) Dyson longwave 
-Maxbotix Range; // Initialize Maxbotix rangefinder
+Maxbotix Range(Logger.D0); // Initialize Maxbotix rangefinder on D0 pin for digital interface
 T9602 RH;  //Initialize T9602 Humidity sensor
+Tally_I2C Counter; //Initialize Tally counter 
 
 String Header = "Rain [in], WindDir [Deg], GndTemp [C], "; //Information header
 uint8_t I2CVals[7] = {0x28, 0x33, 0x4A, 0x41, 0x53, 0x40, 0x1D}; //RH, Tally, LW, SW down, SW up
 
 unsigned long UpdateRate = 60; //Number of seconds between readings 
 
-Margay Logger(Model_2v0, Build_C);  //Use build_b with correct ADC for board
-
 volatile unsigned int Count = 0; //Global counter for tipping bucket 
 unsigned long Holdoff = 25; //25ms between bucket tips minimum
 
 void setup() {
   // Header = Header;  //Manually add atmospheric temp to header
-  Header = Header + Range.GetHeader() + PyroUp.GetHeader() + PyroDown.GetHeader() \
-		+ Pyrg.GetHeader() + RH.GetHeader();
+  Header = Header + Range.GetHeader() +  \
+			PyroUp.GetHeader() + PyroDown.GetHeader() + Pyrg.GetHeader() + RH.GetHeader() + Counter.GetHeader(true);
   Logger.begin(I2CVals, sizeof(I2CVals), Header); //Pass header info to logger
   Init();
 }
@@ -43,18 +44,19 @@ String Update()
   float Temp = TempConvert(Volt, 1.8, 10000, 3977, 10000); //For use with thermistor NTCLE400E3103H
   Temp = Temp - 273.15; //Convert to C from K
   return String(Rain) + "," + String(WindDir) + "," + String(Temp) + "," + Range.GetString() + \
-               PyroUp.GetString() + PyroDown.GetString() + Pyrg.GetString() + RH.GetString();
+               PyroUp.GetString() + PyroDown.GetString() + Pyrg.GetString() + RH.GetString() + Counter.GetString();
 }
 
 void Init() 
 {
-	attachInterrupt(digitalPinToInterrupt(Logger.ExtInt), Tip, FALLING);
-	pinMode(Logger.ExtInt, INPUT_PULLUP);
+	attachInterrupt(digitalPinToInterrupt(Logger.TX), Tip, FALLING);
+//	pinMode(Logger.ExtInt, INPUT_PULLUP);
 	RH.begin();
-	Range.begin(Logger.ExtInt); // Begin Maxbotix on CS pin as software RX
+	Range.begin(); // Begin Maxbotix on CS pin as software RX
 	PyroUp.begin();
 	PyroDown.begin();
 	Pyrg.begin();
+  Counter.begin();
 }
 
 void Tip()

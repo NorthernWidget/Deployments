@@ -3,20 +3,23 @@
 #include <BME.h>
 #include <Maxbotix.h>
 
+Margay Logger(Model_2v0);
+
 BME RH;
-Maxbotix Range;
+Maxbotix Range(Logger.D0);
 
 String Header = ""; //Information header
 uint8_t I2CVals[1] = {0x77}; 
 
 unsigned long UpdateRate = 60; //Number of seconds between readings 
 
-Margay Logger(Model_1v0);
 
 void setup() {
 	Header = Header + Range.GetHeader() + RH.GetHeader();
 	Logger.begin(I2CVals, sizeof(I2CVals), Header); //Pass header info to logger
 	Init();
+  digitalWrite(17, LOW); //Turn off internal I2C pullups
+  digitalWrite(16, LOW);
 }
 
 void loop() {
@@ -32,5 +35,5 @@ String Update()
 void Init() 
 {
 	RH.begin();
-	Range.begin(Logger.ExtInt); //Begin maxbotics on cs pin
+	Range.begin(); //Begin maxbotics on cs pin
 }
