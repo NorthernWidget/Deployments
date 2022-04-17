@@ -31,9 +31,15 @@ void loop(){
 
 String update() {
     initialize(); // Unnecessary here; keeping for the sake of example + consistency
+    // Turn on auxiliary power -- enable the heater.
+    Logger.powerAux(HIGH);
+    //
+    // PROBABLY WANT TO WAIT SOME TIME: LET'S COME BACK TO THIS
+    //
     float _V = Logger.getVoltage(); // Thermocouple voltage
     String _VString = String(_V, 6); // 10 decimal places (more than needed, but space is not a concern): 1.8V / 2**18 = 6.86455E-6
     return _VString; // If a sensor were attached
+    Logger.powerAux(LOW); // Turn off heater -- or should we make many measurements while the heater is still on?
 }
 
 void initialize(){
@@ -41,3 +47,4 @@ void initialize(){
     //mySensor.begin(); // For any Northern Widget sensor
                        // Other libraries may have different standards
 }
+
