@@ -1,6 +1,6 @@
 //MargayDemo.ino
 #include "Margay.h"
-#include <BME.h>
+#include <NW_BME280.h>
 //#include <SHT1x.h>
 #include <SoftwareSerial.h>
 

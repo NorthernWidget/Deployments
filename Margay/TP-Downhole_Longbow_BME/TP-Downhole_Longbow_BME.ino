@@ -1,7 +1,7 @@
 //MargayDemo.ino
 #include "Margay.h"
 #include <TP_Downhole_Longbow.h>
-#include <BME.h>
+#include <NW_BME280.h>
 
 TP_Downhole_Longbow DH; //Initalize TP-Downhole sensor
 BME RH;  //Initialize BME280

@@ -1,7 +1,7 @@
 //MargayDemo.ino
 #include "Margay.h"
 #include <TP_Downhole.h>
-#include <BME.h>
+#include <NW_BME280.h>
 
 // #define MARGAY_1v0
 TP_Downhole DH; //Initalize TP-Downhole sensor

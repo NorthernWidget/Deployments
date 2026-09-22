@@ -1,6 +1,6 @@
 //BME280_DysonSW2.ino
 #include "Margay.h"
-#include <BME.h>
+#include <NW_BME280.h>
 #include <DysonSW.h>
 
 BME RH;

@@ -3,7 +3,7 @@
 #include <DysonSW.h>
 #include <DysonLW.h>
 #include <Maxbotix.h>
-#include <BME.h>
+#include <NW_BME280.h>
 
 static String Header = "GS1A[mV], GS1B [mV], TempG [C], WindPos [deg], Wind [Rot/s], Rain [in]"; //Information header
 

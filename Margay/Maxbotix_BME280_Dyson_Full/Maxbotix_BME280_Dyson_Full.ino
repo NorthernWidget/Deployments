@@ -1,7 +1,7 @@
 #include "Margay.h"
 #include <DysonSW.h>
 #include <DysonLW.h>
-#include <BME.h>
+#include <NW_BME280.h>
 #include <Maxbotix.h>
 
 Margay Logger(Model_2v0, Build_C);
